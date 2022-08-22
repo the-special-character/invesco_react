@@ -2,6 +2,11 @@
 // var app = require("./app");
 import { a, b, abc } from './app';
 
+const hello =
+  'asdfdasasd asdflkasjdf asdkfasdlkfjas alkfads lkajsdf lkasdf';
+
+console.log(hello);
+
 class Animal {
   static makeSound() {
     console.log('bow woe');
@@ -21,6 +26,10 @@ class Animal {
     this.#x++;
   }
 }
+
+const greet = name => `Hello, ${name}`;
+
+console.log(greet);
 
 const animal = new Animal();
 
