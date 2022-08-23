@@ -50,3 +50,11 @@
   "presets": ["@babel/preset-env"]
 }
 ```
+
+# react setup
+
+- install react and react-dom
+  `npm install react react-dom`
+- install `npm install -D @babel/preset-react`
+- add `@babel/preset-react` in .babelrc file in preset array
+- change entry point and js rule in "webpack.config.js" file
