@@ -15,6 +15,6 @@ const root = createRoot(container);
 root.render(
   <>
     <App text="hello from props" />
-    <Main text="hello from props" />
+    <Main text="hello from props" number={5} />
   </>,
 );
