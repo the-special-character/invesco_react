@@ -1,6 +1,7 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import App from './app';
+import Main from './main';
 
 // Component Rules
 // 1. Component Name should Start with capital letter
@@ -14,6 +15,6 @@ const root = createRoot(container);
 root.render(
   <>
     <App text="hello from props" />
-    <App />
+    <Main text="hello from props" />
   </>,
 );
