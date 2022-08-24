@@ -1,13 +1,50 @@
 import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
 import Child2 from './child2';
 // import shallowCompare from 'react-addons-shallow-compare';
 
+const controller = new AbortController();
 export default class Child1 extends PureComponent {
+  static mouseMove = () => {
+    console.log('mouse moved');
+  };
+
   constructor(props) {
     super(props);
     this.state = {
       number: 0,
     };
+
+    this.signal = controller.signal;
+  }
+
+  async componentDidMount() {
+    document.addEventListener(
+      'mousemove',
+      Child1.mouseMove,
+    );
+
+    this.inteval = setInterval(() => {
+      console.log('interval');
+    }, 1000);
+
+    await fetch(
+      'https://jsonplaceholder.typicode.com/todos/1',
+      {
+        signal: this.signal,
+      },
+    );
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener(
+      'mousemove',
+      Child1.mouseMove,
+    );
+
+    clearInterval(this.inteval);
+
+    controller.abort();
   }
 
   //   shouldComponentUpdate(nextProps, nextState) {
@@ -22,6 +59,9 @@ export default class Child1 extends PureComponent {
   //   }
 
   increment = () => {
+    // if (this.state.number > 5)
+    //   throw new Error('something went wrong');
+
     this.setState(({ number }) => ({
       number: number + 1,
     }));
@@ -37,6 +77,9 @@ export default class Child1 extends PureComponent {
     console.log('child1 render');
     const { greet } = this.props;
     const { number } = this.state;
+
+    if (number > 5) throw new Error('something went wrong');
+
     return (
       <div>
         <h1>Child1 component</h1>
@@ -54,3 +97,7 @@ export default class Child1 extends PureComponent {
     );
   }
 }
+
+Child1.propTypes = {
+  greet: PropTypes.string.isRequired,
+};

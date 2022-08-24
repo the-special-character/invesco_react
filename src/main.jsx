@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/prefer-stateless-function */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
@@ -17,11 +18,15 @@ import Child1 from './child1';
 // -> getDerivedStateFromProps
 // -> shouldComponentUpdate
 // -> render
-// -> getSnapshotBeforeUpdate
+// -> getSnapshotBeforeUpdate -> Not possible in hook
 // -> componentDidUpdate
 
 // 3. Unmounting
+// -> componentWillUnmount
+
 // 4. Error
+// -> getDerivedStateFromError -> Not possible in hook
+// -> componentDidCatch -> Not possible in hook
 
 // props are immutable
 
@@ -76,7 +81,28 @@ export default class Main extends Component {
       const json = await res.json();
       console.log(json);
       this.setState({ number: json.length });
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  getSnapshotBeforeUpdate(prevProps, prevState) {
+    return 'hello from getSnapshotBeforeUpdate';
+  }
+
+  // updating dom
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    console.log(snapshot);
+  }
+
+  static getDerivedStateFromError(error) {
+    return {
+      error,
+    };
+  }
+
+  componentDidCatch(error, info) {
+    console.log(error, info.componentStack);
   }
 
   increment = () => {
@@ -104,19 +130,16 @@ export default class Main extends Component {
   };
 
   // capturing info
-  getSnapshotBeforeUpdate(prevProps, prevState) {
-    return 'hello from getSnapshotBeforeUpdate';
-  }
-
-  // updating dom
-  componentDidUpdate(prevProps, prevState, snapshot) {
-    console.log(snapshot);
-  }
 
   render() {
     console.log('render');
     const { text } = this.props;
-    const { number, greet } = this.state;
+    const { number, greet, error } = this.state;
+
+    if (error) {
+      return <h1>{error.message}</h1>;
+    }
+
     return (
       <div>
         <h1
@@ -143,7 +166,7 @@ export default class Main extends Component {
             Change Greet Message
           </button>
         </div>
-        <Child1 greet={greet} />
+        {number < 20 && <Child1 greet={greet} />}
       </div>
     );
   }

@@ -58,3 +58,31 @@
 - install `npm install -D @babel/preset-react`
 - add `@babel/preset-react` in .babelrc file in preset array
 - change entry point and js rule in "webpack.config.js" file
+
+## Life cycle Methods
+
+- Mounting
+  - Constructor
+    - set state base on Props
+    - analytics
+    - bind Method
+  - getDerivedStateFromProps
+    - initilize or update base on old Props or old State
+  - render
+    - render html in browser
+  - componentDidMount
+    - display data on page load
+    - manipulate DOM elements
+- Updating
+  - getDerivedStateFromProps
+    - initilize or update base on old Props or old State
+  - shouldComponentUpdate
+    - conditionally update component
+  - render
+    - render html in browser
+  - getSnapshotBeforeUpdate
+    - capture previous state and return to componentDidUpdate
+  - componentDidUpdate
+    - manipulate DOM element
+- UnMounting
+- Error
