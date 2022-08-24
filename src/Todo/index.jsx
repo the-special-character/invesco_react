@@ -1,21 +1,19 @@
-import React, { Component } from 'react';
+import React, { Component, createRef } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import './style.css';
+import TodoFilter from './todoFilter';
+import TodoForm from './todoForm';
+import TodoList from './todoList';
 
 export default class Todo extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      //   todoText: '',
       todoList: [],
+      filterType: 'all',
     };
+    this.todoTextRef = createRef();
   }
-
-  //   changeTodoText = event => {
-  //     this.setState({
-  //       todoText: event.target.value,
-  //     });
-  //   };
 
   addTodo = event => {
     event.preventDefault();
@@ -26,14 +24,13 @@ export default class Todo extends Component {
           ...todoList,
           {
             id: uuidv4(),
-            text: this.todoTextRef.value,
+            text: this.todoTextRef.current.value,
             isDone: false,
           },
         ],
       }),
       () => {
-        // console.log(this.state.todoList.length);
-        this.todoTextRef.value = '';
+        this.todoTextRef.current.value = '';
       },
     );
   };
@@ -72,44 +69,27 @@ export default class Todo extends Component {
     });
   };
 
-  render() {
-    console.log('render');
+  filterTodo = event => {
+    this.setState({ filterType: event.target.name });
+  };
 
-    const { todoList } = this.state;
+  render() {
+    const { todoList, filterType } = this.state;
 
     return (
-      <div className="container">
+      <div className="container flex">
         <h1>Todo List</h1>
-        <form onSubmit={this.addTodo}>
-          <input
-            ref={ref => {
-              this.todoTextRef = ref;
-            }}
-            type="text"
-            placeholder="Write your todo here..."
-          />
-          <button type="submit">Add Todo</button>
-        </form>
-        <div className="screenWidth">
-          {todoList.map(item => (
-            <div key={item.id} className="todoItem">
-              <input
-                type="checkbox"
-                checked={item.isDone}
-                onChange={() =>
-                  this.toggleCompleteTodo(item)
-                }
-              />
-              <p>{item.text}</p>
-              <button
-                type="button"
-                onClick={() => this.deleteTodo(item)}
-              >
-                Delete
-              </button>
-            </div>
-          ))}
-        </div>
+        <TodoForm
+          addTodo={this.addTodo}
+          ref={this.todoTextRef}
+        />
+        <TodoList
+          todoList={todoList}
+          filterType={filterType}
+          toggleCompleteTodo={this.toggleCompleteTodo}
+          deleteTodo={this.deleteTodo}
+        />
+        <TodoFilter filterTodo={this.filterTodo} />
       </div>
     );
   }
