@@ -1,7 +1,6 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
-import App from './app';
-import Main from './main';
+import Todo from './Todo';
 
 // Component Rules
 // 1. Component Name should Start with capital letter
@@ -12,9 +11,4 @@ import Main from './main';
 // this lines are for virtul dom
 const container = document.getElementById('root');
 const root = createRoot(container);
-root.render(
-  <>
-    <App text="hello from props" />
-    <Main text="hello from props" number={5} />
-  </>,
-);
+root.render(<Todo />);
