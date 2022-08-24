@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 import './style.css';
 
 export default class Todo extends Component {
@@ -19,19 +20,56 @@ export default class Todo extends Component {
   addTodo = event => {
     event.preventDefault();
 
-    // document.addEventListener("copy", () => {
-
-    // })
-
     this.setState(
       ({ todoList }) => ({
-        todoList: [...todoList, this.todoTextRef.value],
+        todoList: [
+          ...todoList,
+          {
+            id: uuidv4(),
+            text: this.todoTextRef.value,
+            isDone: false,
+          },
+        ],
       }),
       () => {
         // console.log(this.state.todoList.length);
         this.todoTextRef.value = '';
       },
     );
+  };
+
+  toggleCompleteTodo = item => {
+    this.setState(({ todoList }) => {
+      const index = todoList.findIndex(
+        x => x.id === item.id,
+      );
+
+      return {
+        todoList: [
+          ...todoList.slice(0, index),
+          {
+            ...todoList[index],
+            isDone: !todoList[index].isDone,
+          },
+          ...todoList.slice(index + 1),
+        ],
+      };
+    });
+  };
+
+  deleteTodo = item => {
+    this.setState(({ todoList }) => {
+      const index = todoList.findIndex(
+        x => x.id === item.id,
+      );
+
+      return {
+        todoList: [
+          ...todoList.slice(0, index),
+          ...todoList.slice(index + 1),
+        ],
+      };
+    });
   };
 
   render() {
@@ -49,14 +87,27 @@ export default class Todo extends Component {
             }}
             type="text"
             placeholder="Write your todo here..."
-            // value={todoText}
-            // onChange={this.changeTodoText}
           />
           <button type="submit">Add Todo</button>
         </form>
-        <div>
+        <div className="screenWidth">
           {todoList.map(item => (
-            <p>{item}</p>
+            <div key={item.id} className="todoItem">
+              <input
+                type="checkbox"
+                checked={item.isDone}
+                onChange={() =>
+                  this.toggleCompleteTodo(item)
+                }
+              />
+              <p>{item.text}</p>
+              <button
+                type="button"
+                onClick={() => this.deleteTodo(item)}
+              >
+                Delete
+              </button>
+            </div>
           ))}
         </div>
       </div>
