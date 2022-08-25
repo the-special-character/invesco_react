@@ -1,5 +1,5 @@
 import React, { Component, createRef } from 'react';
-import { v4 as uuidv4 } from 'uuid';
+import axiosInstance from '../utils/axiosInstance';
 import './style.css';
 import TodoFilter from './todoFilter';
 import TodoForm from './todoForm';
@@ -15,58 +15,90 @@ export default class Todo extends Component {
     this.todoTextRef = createRef();
   }
 
-  addTodo = event => {
+  componentDidMount() {
+    this.loadTodo();
+  }
+
+  loadTodo = async () => {
+    try {
+      const res = await axiosInstance.get('todoList');
+
+      this.setState({
+        todoList: res.data,
+      });
+    } catch (error) {
+      console.error(error.message);
+    }
+  };
+
+  addTodo = async event => {
     event.preventDefault();
+    try {
+      const res = await axiosInstance.post('todoList', {
+        text: this.todoTextRef.current.value,
+        isDone: false,
+      });
 
-    this.setState(
-      ({ todoList }) => ({
-        todoList: [
-          ...todoList,
-          {
-            id: uuidv4(),
-            text: this.todoTextRef.current.value,
-            isDone: false,
-          },
-        ],
-      }),
-      () => {
-        this.todoTextRef.current.value = '';
-      },
-    );
+      this.setState(
+        ({ todoList }) => ({
+          todoList: [...todoList, res.data],
+        }),
+        () => {
+          this.todoTextRef.current.value = '';
+        },
+      );
+    } catch (error) {
+      console.error(error.message);
+    }
   };
 
-  toggleCompleteTodo = item => {
-    this.setState(({ todoList }) => {
-      const index = todoList.findIndex(
-        x => x.id === item.id,
+  toggleCompleteTodo = async item => {
+    try {
+      const res = await axiosInstance.put(
+        `todoList/${item.id}`,
+        {
+          ...item,
+          isDone: !item.isDone,
+        },
       );
 
-      return {
-        todoList: [
-          ...todoList.slice(0, index),
-          {
-            ...todoList[index],
-            isDone: !todoList[index].isDone,
-          },
-          ...todoList.slice(index + 1),
-        ],
-      };
-    });
+      this.setState(({ todoList }) => {
+        const index = todoList.findIndex(
+          x => x.id === item.id,
+        );
+
+        return {
+          todoList: [
+            ...todoList.slice(0, index),
+            res.data,
+            ...todoList.slice(index + 1),
+          ],
+        };
+      });
+    } catch (error) {
+      console.error(error.message);
+    }
   };
 
-  deleteTodo = item => {
-    this.setState(({ todoList }) => {
-      const index = todoList.findIndex(
-        x => x.id === item.id,
-      );
+  deleteTodo = async item => {
+    try {
+      await axiosInstance.delete(`todoList/${item.id}`);
 
-      return {
-        todoList: [
-          ...todoList.slice(0, index),
-          ...todoList.slice(index + 1),
-        ],
-      };
-    });
+      this.setState(({ todoList }) => {
+        const index = todoList.findIndex(
+          x => x.id === item.id,
+        );
+
+        return {
+          todoList: [
+            ...todoList.slice(0, index),
+            ...todoList.slice(index + 1),
+          ],
+        };
+      });
+    } catch (error) {
+      console.error(error.message);
+    }
   };
 
   filterTodo = event => {

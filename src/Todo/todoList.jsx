@@ -41,7 +41,7 @@ TodoList.propTypes = {
   ]).isRequired,
   todoList: PropTypes.arrayOf(
     PropTypes.exact({
-      id: PropTypes.string.isRequired,
+      id: PropTypes.number.isRequired,
       text: PropTypes.string.isRequired,
       isDone: PropTypes.bool.isRequired,
     }).isRequired,
