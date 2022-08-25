@@ -7,7 +7,11 @@ function TodoItem({
   deleteTodo,
 }) {
   return (
-    <div key={item.id} className="todoItem flex">
+    <div
+      data-testid="todo-item"
+      key={item.id}
+      className="todoItem flex"
+    >
       <input
         type="checkbox"
         checked={item.isDone}

@@ -78,7 +78,7 @@ export default class Todo extends Component {
 
     return (
       <div className="container flex">
-        <h1>Todo List</h1>
+        <h1>Todo List App</h1>
         <TodoForm
           addTodo={this.addTodo}
           ref={this.todoTextRef}

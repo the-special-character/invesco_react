@@ -17,6 +17,7 @@ module.exports = {
   },
   plugins: ['react'],
   rules: {
+    'react/jsx-props-no-spreading': 0,
     'no-plusplus': 0,
   },
 };

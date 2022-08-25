@@ -1,0 +1,53 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Todo Component should take snapshot 1`] = `
+NodeList [
+  <div
+    class="container flex"
+  >
+    <h1>
+      Todo List App
+    </h1>
+    <form>
+      <input
+        data-testid="todo_text"
+        placeholder="Write your todo here..."
+        type="text"
+      />
+      <button
+        type="submit"
+      >
+        Add Todo
+      </button>
+    </form>
+    <div
+      class="screenWidth flex-1"
+    />
+    <div
+      class="screenWidth flex"
+    >
+      <button
+        class="flex-1"
+        name="all"
+        type="button"
+      >
+        All
+      </button>
+      <button
+        class="flex-1"
+        name="pending"
+        type="button"
+      >
+        Pending
+      </button>
+      <button
+        class="flex-1"
+        name="completed"
+        type="button"
+      >
+        Completed
+      </button>
+    </div>
+  </div>,
+]
+`;
