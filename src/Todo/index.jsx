@@ -16,15 +16,25 @@ export default class Todo extends Component {
   }
 
   componentDidMount() {
-    this.loadTodo();
+    this.loadTodo('all');
   }
 
-  loadTodo = async () => {
+  loadTodo = async filterType => {
     try {
-      const res = await axiosInstance.get('todoList');
+      let params = {};
+      if (filterType !== 'all') {
+        params = {
+          isDone: filterType === 'completed',
+        };
+      }
+
+      const res = await axiosInstance.get('todoList', {
+        params,
+      });
 
       this.setState({
         todoList: res.data,
+        filterType,
       });
     } catch (error) {
       console.error(error.message);
@@ -102,7 +112,8 @@ export default class Todo extends Component {
   };
 
   filterTodo = event => {
-    this.setState({ filterType: event.target.name });
+    this.loadTodo(event.target.name);
+    // this.setState({ filterType: event.target.name });
   };
 
   render() {
@@ -117,11 +128,13 @@ export default class Todo extends Component {
         />
         <TodoList
           todoList={todoList}
-          filterType={filterType}
           toggleCompleteTodo={this.toggleCompleteTodo}
           deleteTodo={this.deleteTodo}
         />
-        <TodoFilter filterTodo={this.filterTodo} />
+        <TodoFilter
+          filterTodo={this.filterTodo}
+          filterType={filterType}
+        />
       </div>
     );
   }

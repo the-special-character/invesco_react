@@ -4,29 +4,19 @@ import TodoItem from './todoItem';
 
 function TodoList({
   todoList,
-  filterType,
   toggleCompleteTodo,
   deleteTodo,
 }) {
   return (
     <div className="screenWidth flex-1">
-      {todoList.map(item => {
-        if (
-          filterType === 'all' ||
-          (item.isDone && filterType === 'completed') ||
-          (!item.isDone && filterType === 'pending')
-        ) {
-          return (
-            <TodoItem
-              key={item.id}
-              item={item}
-              toggleCompleteTodo={toggleCompleteTodo}
-              deleteTodo={deleteTodo}
-            />
-          );
-        }
-        return null;
-      })}
+      {todoList.map(item => (
+        <TodoItem
+          key={item.id}
+          item={item}
+          toggleCompleteTodo={toggleCompleteTodo}
+          deleteTodo={deleteTodo}
+        />
+      ))}
     </div>
   );
 }
@@ -34,11 +24,6 @@ function TodoList({
 TodoList.propTypes = {
   deleteTodo: PropTypes.func.isRequired,
   toggleCompleteTodo: PropTypes.func.isRequired,
-  filterType: PropTypes.oneOf([
-    'all',
-    'pending',
-    'completed',
-  ]).isRequired,
   todoList: PropTypes.arrayOf(
     PropTypes.exact({
       id: PropTypes.number.isRequired,
