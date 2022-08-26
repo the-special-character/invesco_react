@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import { Routes, Route, Link } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
+import AuthLayout from './layout/authLayout';
+import MainLayout from './layout/mainLayout';
 import Contact from './pages/contact';
 import Home from './pages/home';
 import Login from './pages/login';
@@ -14,38 +16,17 @@ export default class App extends Component {
 
   render() {
     return (
-      <div>
-        <header>
-          <nav>
-            <ul>
-              <li>
-                <Link to="/">Home</Link>
-              </li>
-              <li>
-                <Link to="/contact">Contact</Link>
-              </li>
-              <li>
-                <Link to="/login">Login</Link>
-              </li>
-              <li>
-                <Link to="/register">Register</Link>
-              </li>
-            </ul>
-          </nav>
-        </header>
-        <main>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/login" element={<Login />} />
-            <Route
-              path="/register"
-              element={<Register />}
-            />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </main>
-      </div>
+      <Routes>
+        <Route path="/" element={<MainLayout />}>
+          <Route index element={<Home />} />
+          <Route path="contact" element={<Contact />} />
+        </Route>
+        <Route path="/auth" element={<AuthLayout />}>
+          <Route index element={<Login />} />
+          <Route path="register" element={<Register />} />
+        </Route>
+        <Route path="*" element={<NotFound />} />
+      </Routes>
     );
   }
 }
