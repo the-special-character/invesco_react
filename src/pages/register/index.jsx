@@ -1,92 +1,96 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React from 'react';
+import FormikForm from '../../components/formikForm';
+import FormikInput from '../../components/formikInput';
+
+const wait = time =>
+  new Promise(resolve => {
+    setTimeout(resolve, time);
+  });
+
+const registerFields = [
+  {
+    name: 'name',
+    id: 'name',
+    placeholder: 'Name',
+    component: FormikInput,
+    type: 'text',
+    autoComplete: 'name',
+    validate: value => {
+      if (!value) return 'Required...';
+      return '';
+    },
+  },
+  {
+    name: 'birthDate',
+    id: 'birthDate',
+    placeholder: 'Birth Date',
+    component: FormikInput,
+    type: 'date',
+    autoComplete: 'birth-date',
+    validate: value => {
+      if (!value) return 'Required...';
+      return '';
+    },
+  },
+  {
+    name: 'email',
+    id: 'email-address',
+    placeholder: 'Email address',
+    component: FormikInput,
+    type: 'email',
+    autoComplete: 'email',
+    validate: value => {
+      if (!value) return 'Required...';
+      return '';
+    },
+  },
+  {
+    name: 'password',
+    id: 'password',
+    placeholder: 'Password',
+    component: FormikInput,
+    type: 'password',
+    autoComplete: 'new-password',
+    validate: value => {
+      if (!value) return 'Required...';
+      return '';
+    },
+  },
+  {
+    name: 'confirmPassword',
+    id: 'confirmPassword',
+    placeholder: 'Confirm Password',
+    component: FormikInput,
+    type: 'password',
+    autoComplete: 'new-password',
+    validate: value => {
+      if (!value) return 'Required...';
+      return '';
+    },
+  },
+];
+
+const initialValues = {
+  name: '',
+  birthDate: '',
+  email: '',
+  password: '',
+  confirmPassword: '',
+};
 
 function Register() {
   return (
-    <form
-      className="mt-8 space-y-6"
-      action="#"
-      method="POST"
-    >
-      <input
-        type="hidden"
-        name="remember"
-        defaultValue="true"
-      />
-      <div className="rounded-md shadow-sm -space-y-px">
-        <div>
-          <label htmlFor="name" className="sr-only">
-            Name
-          </label>
-          <input
-            id="name"
-            name="name"
-            type="text"
-            autoComplete="name"
-            required
-            className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-            placeholder="Name"
-          />
-        </div>
-        <div>
-          <label
-            htmlFor="email-address"
-            className="sr-only"
-          >
-            Email address
-          </label>
-          <input
-            id="email-address"
-            name="email"
-            type="email"
-            autoComplete="email"
-            required
-            className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-            placeholder="Email address"
-          />
-        </div>
-        <div>
-          <label htmlFor="password" className="sr-only">
-            Password
-          </label>
-          <input
-            id="password"
-            name="password"
-            type="password"
-            autoComplete="new-password"
-            required
-            className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-            placeholder="Password"
-          />
-        </div>
-        <div>
-          <label
-            htmlFor="confirm-password"
-            className="sr-only"
-          >
-            Confirm Password
-          </label>
-          <input
-            id="confirm-password"
-            name="confirm-password"
-            type="password"
-            autoComplete="new-password"
-            required
-            className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-            placeholder="Confirm Password"
-          />
-        </div>
-      </div>
-
-      <div>
-        <button
-          type="submit"
-          className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-        >
-          Sign up
-        </button>
-      </div>
-    </form>
+    <FormikForm
+      initialValues={initialValues}
+      onSubmit={async (values, actions) => {
+        await wait(3000);
+        console.log(values);
+        actions.resetForm();
+      }}
+      fields={registerFields}
+      btnTitle="Sign Up"
+    />
   );
 }
 
