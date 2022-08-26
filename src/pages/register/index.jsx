@@ -16,6 +16,7 @@ const registerFields = [
     component: FormikInput,
     type: 'text',
     autoComplete: 'name',
+    inputClassName: 'rounded-t-md',
     validate: value => {
       if (!value) return 'Required...';
       return '';
@@ -64,6 +65,7 @@ const registerFields = [
     component: FormikInput,
     type: 'password',
     autoComplete: 'new-password',
+    inputClassName: 'rounded-b-md',
     validate: value => {
       if (!value) return 'Required...';
       return '';

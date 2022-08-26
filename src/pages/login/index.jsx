@@ -18,6 +18,7 @@ const loginFields = [
     component: FormikInput,
     type: 'email',
     autoComplete: 'email',
+    inputClassName: 'rounded-t-md',
     validate: value => {
       if (!value) return 'Required...';
       return '';
@@ -30,6 +31,7 @@ const loginFields = [
     component: FormikInput,
     type: 'password',
     autoComplete: 'current-password',
+    inputClassName: 'rounded-b-md',
     validate: value => {
       if (!value) return 'Required...';
       return '';
