@@ -9,11 +9,11 @@ import {
   Bars3Icon,
   XMarkIcon,
 } from '@heroicons/react/24/outline';
-import { Outlet } from 'react-router-dom';
+import { Link, Outlet } from 'react-router-dom';
 
 const navigation = [
-  { name: 'Home', href: '#', current: true },
-  { name: 'Contact', href: '#', current: false },
+  { name: 'Home', href: '/', current: true },
+  { name: 'Contact', href: '/contact', current: false },
 ];
 
 function classNames(...classes) {
@@ -64,9 +64,9 @@ function MainLayout() {
                     <div className="hidden sm:block sm:ml-6">
                       <div className="flex space-x-4">
                         {navigation.map(item => (
-                          <a
+                          <Link
                             key={item.name}
-                            href={item.href}
+                            to={item.href}
                             className={classNames(
                               item.current
                                 ? 'bg-gray-900 text-white'
@@ -80,7 +80,7 @@ function MainLayout() {
                             }
                           >
                             {item.name}
-                          </a>
+                          </Link>
                         ))}
                       </div>
                     </div>
