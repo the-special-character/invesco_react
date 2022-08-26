@@ -1,6 +1,9 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
-import Todo from './Todo';
+import { BrowserRouter } from 'react-router-dom';
+// import Todo from './Todo';
+import App from './app';
+import './main.css';
 
 // Component Rules
 // 1. Component Name should Start with capital letter
@@ -11,4 +14,8 @@ import Todo from './Todo';
 // this lines are for virtul dom
 const container = document.getElementById('root');
 const root = createRoot(container);
-root.render(<Todo />);
+root.render(
+  <BrowserRouter>
+    <App />
+  </BrowserRouter>,
+);
