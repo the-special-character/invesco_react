@@ -7,6 +7,7 @@ function TodoList({
   toggleCompleteTodo,
   deleteTodo,
 }) {
+  console.log('TodoList');
   return (
     <div className="screenWidth flex-1">
       {todoList.map(item => (

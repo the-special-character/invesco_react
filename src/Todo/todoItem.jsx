@@ -6,6 +6,7 @@ function TodoItem({
   toggleCompleteTodo,
   deleteTodo,
 }) {
+  console.log('TodoItem');
   return (
     <div
       data-testid="todo-item"

@@ -1,4 +1,10 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import axiosInstance from '../utils/axiosInstance';
 import './style.css';
 import TodoFilter from './todoFilter';
@@ -15,7 +21,7 @@ function Todo() {
 
   const todoTextRef = useRef();
 
-  const loadTodo = async ft => {
+  const loadTodo = useCallback(async ft => {
     try {
       let params = {};
       if (ft !== 'all') {
@@ -33,9 +39,9 @@ function Todo() {
     } catch (error) {
       console.error(error.message);
     }
-  };
+  }, []);
 
-  const addTodo = async event => {
+  const addTodo = useCallback(async event => {
     event.preventDefault();
     try {
       const res = await axiosInstance.post('todoList', {
@@ -48,9 +54,9 @@ function Todo() {
     } catch (error) {
       console.error(error.message);
     }
-  };
+  }, []);
 
-  const toggleCompleteTodo = async item => {
+  const toggleCompleteTodo = useCallback(async item => {
     try {
       const res = await axiosInstance.put(
         `todoList/${item.id}`,
@@ -71,9 +77,9 @@ function Todo() {
     } catch (error) {
       console.error(error.message);
     }
-  };
+  }, []);
 
-  const deleteTodo = async item => {
+  const deleteTodo = useCallback(async item => {
     try {
       await axiosInstance.delete(`todoList/${item.id}`);
 
@@ -87,20 +93,30 @@ function Todo() {
     } catch (error) {
       console.error(error.message);
     }
-  };
+  }, []);
 
-  const filterTodo = event => {
-    loadTodo(event.target.name);
-  };
+  const filterTodo = useCallback(
+    event => {
+      loadTodo(event.target.name);
+    },
+    [loadTodo],
+  );
+
+  // non premitive type of data as a prop then have to use useMemo
+  const user = useMemo(() => ({ name: 'yagnesh' }), []);
 
   useEffect(() => {
     loadTodo('all');
-  }, []);
+  }, [loadTodo]);
 
   return (
     <div className="container flex">
       <h1>Todo List App</h1>
-      <TodoForm addTodo={addTodo} ref={todoTextRef} />
+      <TodoForm
+        user={user}
+        addTodo={addTodo}
+        ref={todoTextRef}
+      />
       <TodoList
         todoList={todoList}
         toggleCompleteTodo={toggleCompleteTodo}

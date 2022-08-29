@@ -2,6 +2,7 @@ import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 
 function TodoFilter({ filterTodo, filterType }) {
+  console.log('TodoFilter');
   return (
     <div className="screenWidth flex">
       <button

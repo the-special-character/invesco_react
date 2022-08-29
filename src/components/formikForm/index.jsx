@@ -1,4 +1,5 @@
 import { Field, Form, Formik } from 'formik';
+import PropTypes from 'prop-types';
 import React from 'react';
 
 function FormikForm({
@@ -38,5 +39,11 @@ function FormikForm({
     </Formik>
   );
 }
+
+FormikForm.propTypes = {
+  children: PropTypes.element.isRequired,
+  btnTitle: PropTypes.string.isRequired,
+  fields: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+};
 
 export default FormikForm;

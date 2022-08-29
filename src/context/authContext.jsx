@@ -1,8 +1,11 @@
 import React, {
   createContext,
+  useCallback,
   useEffect,
+  useMemo,
   useState,
 } from 'react';
+import PropTypes from 'prop-types';
 import axiosInstance from '../utils/axiosInstance';
 
 export const AuthContext = createContext();
@@ -18,7 +21,7 @@ export function AuthProvider({ children }) {
     }
   }, []);
 
-  const register = async (values, actions) => {
+  const register = useCallback(async (values, actions) => {
     try {
       const { confirmPassword, ...rest } = values;
       const res = await axiosInstance.post(
@@ -38,9 +41,9 @@ export function AuthProvider({ children }) {
         serverError: error.response.data,
       });
     }
-  };
+  }, []);
 
-  const login = async (values, actions) => {
+  const login = useCallback(async (values, actions) => {
     try {
       const { rememberMe, ...rest } = values;
       const res = await axiosInstance.post('login', rest);
@@ -64,24 +67,31 @@ export function AuthProvider({ children }) {
         serverError: error.response.data,
       });
     }
-  };
+  }, []);
 
-  const logout = () => {
+  const logout = useCallback(() => {
     sessionStorage.clear();
     localStorage.clear();
     setUser(null);
-  };
+  }, []);
+
+  const value = useMemo(
+    () => ({
+      register,
+      login,
+      logout,
+      user,
+    }),
+    [user, login, register, logout],
+  );
 
   return (
-    <AuthContext.Provider
-      value={{
-        register,
-        login,
-        logout,
-        user,
-      }}
-    >
+    <AuthContext.Provider value={value}>
       {children}
     </AuthContext.Provider>
   );
 }
+
+AuthProvider.propTypes = {
+  children: PropTypes.element.isRequired,
+};
