@@ -4,11 +4,7 @@ import React from 'react';
 import FormikCheckbox from '../../components/formikCheckbox';
 import FormikForm from '../../components/formikForm';
 import FormikInput from '../../components/formikInput';
-
-const wait = time =>
-  new Promise(resolve => {
-    setTimeout(resolve, time);
-  });
+import { AuthContext } from '../../context/authContext';
 
 const loginFields = [
   {
@@ -47,33 +43,33 @@ const initialValues = {
 
 function Login() {
   return (
-    <FormikForm
-      initialValues={initialValues}
-      onSubmit={async (values, actions) => {
-        await wait(3000);
-        console.log(values);
-        actions.resetForm();
-      }}
-      fields={loginFields}
-      btnTitle="Sign In"
-    >
-      <div className="flex items-center justify-between">
-        <Field
-          id="rememberMe"
-          name="rememberMe"
-          label="Remember Me"
-          component={FormikCheckbox}
-        />
-        <div className="text-sm">
-          <a
-            href="#forgotPassword"
-            className="font-medium text-indigo-600 hover:text-indigo-500"
-          >
-            Forgot your password?
-          </a>
-        </div>
-      </div>
-    </FormikForm>
+    <AuthContext.Consumer>
+      {({ login }) => (
+        <FormikForm
+          initialValues={initialValues}
+          onSubmit={login}
+          fields={loginFields}
+          btnTitle="Sign In"
+        >
+          <div className="flex items-center justify-between">
+            <Field
+              id="rememberMe"
+              name="rememberMe"
+              label="Remember Me"
+              component={FormikCheckbox}
+            />
+            <div className="text-sm">
+              <a
+                href="#forgotPassword"
+                className="font-medium text-indigo-600 hover:text-indigo-500"
+              >
+                Forgot your password?
+              </a>
+            </div>
+          </div>
+        </FormikForm>
+      )}
+    </AuthContext.Consumer>
   );
 }
 

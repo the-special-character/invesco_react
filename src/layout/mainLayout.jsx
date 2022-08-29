@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useContext } from 'react';
 import {
   Disclosure,
   Menu,
@@ -9,7 +9,8 @@ import {
   Bars3Icon,
   XMarkIcon,
 } from '@heroicons/react/24/outline';
-import { Link, Outlet } from 'react-router-dom';
+import { Link, Navigate, Outlet } from 'react-router-dom';
+import { AuthContext } from '../context/authContext';
 
 const navigation = [
   { name: 'Home', href: '/', current: true },
@@ -21,6 +22,12 @@ function classNames(...classes) {
 }
 
 function MainLayout() {
+  const { user, logout } = useContext(AuthContext);
+
+  if (!user) {
+    return <Navigate to="/auth" replace />;
+  }
+
   return (
     <>
       <header>
@@ -158,17 +165,18 @@ function MainLayout() {
                           </Menu.Item>
                           <Menu.Item>
                             {({ active }) => (
-                              <a
-                                href="#logout"
+                              <button
+                                type="button"
+                                onClick={logout}
                                 className={classNames(
                                   active
                                     ? 'bg-gray-100'
                                     : '',
-                                  'block px-4 py-2 text-sm text-gray-700',
+                                  'w-full text-left block px-4 py-2 text-sm text-gray-700',
                                 )}
                               >
                                 Sign out
-                              </a>
+                              </button>
                             )}
                           </Menu.Item>
                         </Menu.Items>

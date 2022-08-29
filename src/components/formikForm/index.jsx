@@ -9,8 +9,13 @@ function FormikForm({
 }) {
   return (
     <Formik {...props}>
-      {({ isValid, dirty, isSubmitting }) => (
+      {({ isValid, dirty, isSubmitting, errors }) => (
         <Form className="mt-8 space-y-6">
+          {errors.serverError && (
+            <p className="text-red-600 font-semibold text-lg text-center">
+              {errors.serverError}
+            </p>
+          )}
           <div className="rounded-md shadow-sm -space-y-px">
             {fields.map(x => (
               <Field key={x.name} {...x} />
