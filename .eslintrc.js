@@ -19,6 +19,7 @@ module.exports = {
   rules: {
     'react/jsx-props-no-spreading': 0,
     'no-plusplus': 0,
+    'default-param-last': 0,
     'react-hooks/rules-of-hooks': 'error',
     'react-hooks/exhaustive-deps': 'error',
   },

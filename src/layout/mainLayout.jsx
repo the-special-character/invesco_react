@@ -9,12 +9,17 @@ import {
   Bars3Icon,
   XMarkIcon,
 } from '@heroicons/react/24/outline';
-import { Link, Navigate, Outlet } from 'react-router-dom';
+import {
+  Link,
+  Navigate,
+  Outlet,
+  useLocation,
+} from 'react-router-dom';
 import { AuthContext } from '../context/authContext';
 
 const navigation = [
-  { name: 'Home', href: '/', current: true },
-  { name: 'Contact', href: '/contact', current: false },
+  { name: 'Home', href: '/' },
+  { name: 'Contact', href: '/contact' },
 ];
 
 function classNames(...classes) {
@@ -22,6 +27,9 @@ function classNames(...classes) {
 }
 
 function MainLayout() {
+  const location = useLocation();
+
+  console.log(location.pathname);
   const { user, logout } = useContext(AuthContext);
 
   if (!user) {
@@ -75,13 +83,15 @@ function MainLayout() {
                             key={item.name}
                             to={item.href}
                             className={classNames(
-                              item.current
+                              item.href ===
+                                location.pathname
                                 ? 'bg-gray-900 text-white'
                                 : 'text-gray-300 hover:bg-gray-700 hover:text-white',
                               'px-3 py-2 rounded-md text-sm font-medium',
                             )}
                             aria-current={
-                              item.current
+                              item.href ===
+                              location.pathname
                                 ? 'page'
                                 : undefined
                             }

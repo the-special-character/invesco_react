@@ -1,12 +1,16 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import { configureStore } from '@reduxjs/toolkit';
 // import Child2 from './child2';
 // import Todo from './Todo';
 import App from './app';
+
 import { AuthProvider } from './context/authContext';
 import { ThemeProvider } from './context/themeContext';
 import './main.css';
+import rootReducer from './reducers';
 
 // Component Rules
 // 1. Component Name should Start with capital letter
@@ -86,15 +90,21 @@ import './main.css';
 //   );
 // }
 
+const store = configureStore({
+  reducer: rootReducer,
+});
+
 // this lines are for virtul dom
 const container = document.getElementById('root');
 const root = createRoot(container);
 root.render(
-  <BrowserRouter>
-    <AuthProvider>
-      <ThemeProvider>
-        <App />
-      </ThemeProvider>
-    </AuthProvider>
-  </BrowserRouter>,
+  <Provider store={store}>
+    <BrowserRouter>
+      <AuthProvider>
+        <ThemeProvider>
+          <App />
+        </ThemeProvider>
+      </AuthProvider>
+    </BrowserRouter>
+  </Provider>,
 );
