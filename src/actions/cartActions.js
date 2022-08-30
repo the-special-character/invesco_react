@@ -5,7 +5,7 @@ export const addCartItemAction =
     try {
       dispatch({
         type: 'ADD_CART_ITEM_REQUEST',
-        payload: true,
+        loadingId: product.id,
       });
       const res = await axiosInstance.post('cart', {
         productId: product.id,
@@ -14,11 +14,13 @@ export const addCartItemAction =
       dispatch({
         type: 'ADD_CART_ITEM_SUCCESS',
         payload: res.data,
+        loadingId: product.id,
       });
     } catch (error) {
       dispatch({
         type: 'ADD_CART_ITEM_FAILURE',
         payload: error?.message || error?.response?.data,
+        loadingId: product.id,
       });
     }
   };
@@ -28,7 +30,7 @@ export const updateCartItemAction =
     try {
       dispatch({
         type: 'UPDATE_CART_ITEM_REQUEST',
-        payload: true,
+        loadingId: cart.productId,
       });
       const res = await axiosInstance.put(
         `cart/${cart.id}`,
@@ -37,11 +39,13 @@ export const updateCartItemAction =
       dispatch({
         type: 'UPDATE_CART_ITEM_SUCCESS',
         payload: res.data,
+        loadingId: cart.productId,
       });
     } catch (error) {
       dispatch({
         type: 'UPDATE_CART_ITEM_FAILURE',
         payload: error?.message || error?.response?.data,
+        loadingId: cart.productId,
       });
     }
   };
@@ -51,17 +55,19 @@ export const deleteCartItemAction =
     try {
       dispatch({
         type: 'DELETE_CART_ITEM_REQUEST',
-        payload: true,
+        loadingId: cart.productId,
       });
       await axiosInstance.delete(`cart/${cart.id}`);
       dispatch({
         type: 'DELETE_CART_ITEM_SUCCESS',
         payload: cart,
+        loadingId: cart.productId,
       });
     } catch (error) {
       dispatch({
         type: 'DELETE_CART_ITEM_FAILURE',
         payload: error?.message || error?.response?.data,
+        loadingId: cart.productId,
       });
     }
   };

@@ -283,5 +283,41 @@
       }
     }
   ],
-  "cart": []
+  "cart": [
+    {
+      "productId": 1,
+      "quantity": 9,
+      "id": 1
+    },
+    {
+      "productId": 2,
+      "quantity": 2,
+      "id": 2
+    },
+    {
+      "productId": 4,
+      "quantity": 2,
+      "id": 4
+    },
+    {
+      "productId": 8,
+      "quantity": 1,
+      "id": 7
+    },
+    {
+      "productId": 9,
+      "quantity": 1,
+      "id": 8
+    },
+    {
+      "productId": 10,
+      "quantity": 1,
+      "id": 9
+    },
+    {
+      "productId": 7,
+      "quantity": 1,
+      "id": 10
+    }
+  ]
 }

@@ -5,7 +5,7 @@ const getLoadingMatches = actionType =>
 
 export default (
   state = initialState,
-  { type, payload },
+  { type, payload, loadingId },
 ) => {
   const match = getLoadingMatches(type);
 
@@ -14,8 +14,29 @@ export default (
   const [, actionName, actionType] = match;
 
   if (actionType === 'REQUEST') {
-    return { ...state, [actionName]: payload };
+    if (loadingId) {
+      return {
+        ...state,
+        [actionName]: [
+          ...(state[actionName] || []),
+          loadingId,
+        ],
+      };
+    }
+    return {
+      ...state,
+      [actionName]: payload,
+    };
   }
   const { [actionName]: name, ...rest } = state;
-  return rest;
+
+  if (!loadingId) return rest;
+
+  const updatedState = name.filter(x => x !== loadingId);
+
+  if (updatedState.length === 0) {
+    return rest;
+  }
+
+  return { ...rest, [actionName]: updatedState };
 };

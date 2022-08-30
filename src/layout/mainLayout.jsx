@@ -31,7 +31,6 @@ function classNames(...classes) {
 function MainLayout({ cart }) {
   const location = useLocation();
 
-  console.log(location.pathname);
   const { user, logout } = useContext(AuthContext);
 
   if (!user) {
