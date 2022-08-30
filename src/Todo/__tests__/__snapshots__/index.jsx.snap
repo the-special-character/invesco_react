@@ -29,6 +29,7 @@ NodeList [
       <button
         class="flex-1"
         name="all"
+        style="background-color: dodgerblue;"
         type="button"
       >
         All

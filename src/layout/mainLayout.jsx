@@ -4,8 +4,9 @@ import {
   Menu,
   Transition,
 } from '@headlessui/react';
+import PropTypes from 'prop-types';
 import {
-  BellIcon,
+  ShoppingBagIcon,
   Bars3Icon,
   XMarkIcon,
 } from '@heroicons/react/24/outline';
@@ -15,6 +16,7 @@ import {
   Outlet,
   useLocation,
 } from 'react-router-dom';
+import { connect } from 'react-redux';
 import { AuthContext } from '../context/authContext';
 
 const navigation = [
@@ -26,7 +28,7 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
 }
 
-function MainLayout() {
+function MainLayout({ cart }) {
   const location = useLocation();
 
   console.log(location.pathname);
@@ -105,15 +107,18 @@ function MainLayout() {
                   <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
                     <button
                       type="button"
-                      className="bg-gray-800 p-1 rounded-full text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
+                      className="bg-gray-800 p-1 rounded-full text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white flex items-center gap-2 px-2"
                     >
-                      <span className="sr-only">
-                        View notifications
-                      </span>
-                      <BellIcon
+                      <ShoppingBagIcon
                         className="h-6 w-6"
                         aria-hidden="true"
                       />
+                      <span>
+                        {cart.reduce(
+                          (p, c) => p + c.quantity,
+                          0,
+                        )}
+                      </span>
                     </button>
 
                     {/* Profile dropdown */}
@@ -229,4 +234,18 @@ function MainLayout() {
   );
 }
 
-export default MainLayout;
+MainLayout.propTypes = {
+  cart: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      productId: PropTypes.number.isRequired,
+      quantity: PropTypes.number.isRequired,
+    }).isRequired,
+  ).isRequired,
+};
+
+const mapStateToProps = store => ({
+  cart: store.cart,
+});
+
+export default connect(mapStateToProps)(MainLayout);
