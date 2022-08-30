@@ -119,13 +119,20 @@ Product.propTypes = {
     id: PropTypes.number.isRequired,
     productId: PropTypes.number.isRequired,
     quantity: PropTypes.number.isRequired,
-  }).isRequired,
+  }),
   addCartItem: PropTypes.func.isRequired,
   updateCartItem: PropTypes.func.isRequired,
   deleteCartItem: PropTypes.func.isRequired,
-  isAdding: PropTypes.bool.isRequired,
-  isUpdating: PropTypes.bool.isRequired,
-  isDeleting: PropTypes.bool.isRequired,
+  isAdding: PropTypes.bool,
+  isUpdating: PropTypes.bool,
+  isDeleting: PropTypes.bool,
+};
+
+Product.defaultProps = {
+  cartItem: undefined,
+  isAdding: undefined,
+  isUpdating: undefined,
+  isDeleting: undefined,
 };
 
 export default Product;

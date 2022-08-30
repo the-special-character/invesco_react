@@ -20,7 +20,7 @@ function Home({
   return (
     <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
       {products.map(product => (
-        <Product product={product} />
+        <Product key={product.id} product={product} />
       ))}
     </div>
   );
@@ -30,7 +30,6 @@ Home.propTypes = {
   loadProducts: PropTypes.func.isRequired,
   loadCart: PropTypes.func.isRequired,
   isProductsLoading: PropTypes.bool.isRequired,
-  productsError: PropTypes.string.isRequired,
   products: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.number.isRequired,
@@ -45,13 +44,6 @@ Home.propTypes = {
       }).isRequired,
     }).isRequired,
   ).isRequired,
-  //   cart: PropTypes.arrayOf(
-  //     PropTypes.shape({
-  //       id: PropTypes.number.isRequired,
-  //       productId: PropTypes.number.isRequired,
-  //       quantity: PropTypes.number.isRequired,
-  //     }).isRequired,
-  //   ).isRequired,
 };
 
 export default Home;
