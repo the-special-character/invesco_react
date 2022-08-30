@@ -18,6 +18,7 @@ import {
 } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { AuthContext } from '../context/authContext';
+import Errors from '../components/errors';
 
 const navigation = [
   { name: 'Home', href: '/' },
@@ -229,6 +230,7 @@ function MainLayout({ cart }) {
       <main>
         <Outlet />
       </main>
+      <Errors />
     </>
   );
 }

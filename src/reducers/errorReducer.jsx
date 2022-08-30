@@ -7,6 +7,11 @@ export default (
   state = initialState,
   { type, payload },
 ) => {
+  if (type === 'CLEAR_ERROR') {
+    const { [payload]: name, ...rest } = state;
+    return rest;
+  }
+
   const match = getLoadingMatches(type);
 
   if (!match) return state;

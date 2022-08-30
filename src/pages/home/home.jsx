@@ -6,7 +6,6 @@ function Home({
   products,
   isProductsLoading,
   loadCart,
-  productsError,
   loadProducts,
 }) {
   useEffect(() => {
@@ -16,10 +15,6 @@ function Home({
 
   if (isProductsLoading) {
     return <h1>Loading...</h1>;
-  }
-
-  if (productsError) {
-    return <h1>{productsError}</h1>;
   }
 
   return (

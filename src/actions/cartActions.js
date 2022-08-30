@@ -19,7 +19,10 @@ export const addCartItemAction =
     } catch (error) {
       dispatch({
         type: 'ADD_CART_ITEM_FAILURE',
-        payload: error?.message || error?.response?.data,
+        payload: {
+          title: 'Add Cart Fail',
+          message: error?.message || error?.response?.data,
+        },
         loadingId: product.id,
       });
     }
@@ -44,7 +47,10 @@ export const updateCartItemAction =
     } catch (error) {
       dispatch({
         type: 'UPDATE_CART_ITEM_FAILURE',
-        payload: error?.message || error?.response?.data,
+        payload: {
+          title: 'Update Cart Fail',
+          message: error?.message || error?.response?.data,
+        },
         loadingId: cart.productId,
       });
     }
@@ -66,7 +72,10 @@ export const deleteCartItemAction =
     } catch (error) {
       dispatch({
         type: 'DELETE_CART_ITEM_FAILURE',
-        payload: error?.message || error?.response?.data,
+        payload: {
+          title: 'Delete Cart Fail',
+          message: error?.message || error?.response?.data,
+        },
         loadingId: cart.productId,
       });
     }
@@ -86,7 +95,10 @@ export const loadCartAction = () => async dispatch => {
   } catch (error) {
     dispatch({
       type: 'LOAD_CART_FAILURE',
-      payload: error?.message || error?.response?.data,
+      payload: {
+        title: 'Load Cart Fail',
+        message: error?.message || error?.response?.data,
+      },
     });
   }
 };

@@ -14,7 +14,10 @@ export const loadProductsAction = () => async dispatch => {
   } catch (error) {
     dispatch({
       type: 'LOAD_PRODUCTS_FAILURE',
-      payload: error?.message || error?.response?.data,
+      payload: {
+        title: 'Load Product Fail',
+        message: error?.message || error?.response?.data,
+      },
     });
   }
 };

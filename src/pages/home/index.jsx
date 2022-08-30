@@ -7,7 +7,6 @@ const mapStateToProps = store => ({
   products: store.products,
   cart: store.cart,
   isProductsLoading: !!store.loading.LOAD_PRODUCTS,
-  productsError: store.errors.LOAD_PRODUCTS || '',
 });
 
 const mapDispatchToProps = dispatch => ({
